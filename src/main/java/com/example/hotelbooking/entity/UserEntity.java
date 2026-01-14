@@ -16,41 +16,35 @@ import lombok.NoArgsConstructor;
 import java.util.Set;
 
 @Entity
-@Table(name = "hotels")
+@Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 @Data
-public class HotelEntity {
-
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 100)
-    private String name;
-    @Column(name = "ad_title", length = 100)
-    private String adTitle;
-    @Column(length = 50)
-    private String city;
-    private String address;
-    private double rating;
-    @Column(name = "number_of_ratings")
-    private int numberOfRatings;
+
+    @Column(length = 50, unique = true)
+    private String username;
+    private String password;
+    private String email;
+    private RoleType role;
     @OneToMany(
+            mappedBy = "quest",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @EqualsAndHashCode.Exclude
-    private Set<RoomEntity> rooms;
+    private Set<BookingEntity> bookings;
 
-    public void addRoom(RoomEntity room) {
-        room.setHotel(this);
-        this.rooms.add(room);
+    public void addBooking(BookingEntity booking) {
+        booking.setQuest(this);
+        this.bookings.add(booking);
     }
 
-    public void removeRoom(RoomEntity room) {
-        room.setHotel(null);
-        this.rooms.remove(room);
+    public void removeBooking(BookingEntity booking) {
+        booking.setQuest(null);
+        this.bookings.remove(booking);
     }
-
 }
