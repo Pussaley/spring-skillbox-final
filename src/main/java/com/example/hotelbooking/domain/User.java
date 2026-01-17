@@ -16,4 +16,9 @@ public class User {
     private String email;
     private RoleType role;
     private Set<Booking> bookings;
+
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean enabled;
+    private boolean credentialsNonExpired;
 }

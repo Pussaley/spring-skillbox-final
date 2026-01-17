@@ -1,11 +1,16 @@
 package com.example.hotelbooking.service.impl;
 
+import com.example.hotelbooking.domain.Hotel;
+import com.example.hotelbooking.entity.HotelEntity;
+import com.example.hotelbooking.exception.EntityNotFoundException;
 import com.example.hotelbooking.mapper.HotelMapper;
 import com.example.hotelbooking.repository.HotelRepository;
 import com.example.hotelbooking.service.HotelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -15,4 +20,49 @@ public class HotelServiceImpl implements HotelService {
     private final HotelMapper hotelMapper;
     private final HotelRepository hotelRepository;
 
+    @Override
+    public List<Hotel> findAll() {
+        return hotelRepository.findAll().stream()
+                .map(hotelMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public Hotel findById(Long id) throws EntityNotFoundException {
+        return hotelRepository.findById(id)
+                .map(hotelMapper::toDomain)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Отель с таким id не найден.")
+                );
+    }
+
+    @Override
+    public Hotel create(Hotel hotel) {
+        HotelEntity entity = hotelMapper.toEntity(hotel);
+        HotelEntity saved = hotelRepository.save(entity);
+
+        return hotelMapper.toDomain(saved);
+    }
+
+    @Override
+    public Hotel update(Long id, Hotel hotel) throws EntityNotFoundException {
+
+        HotelEntity existing = hotelRepository.findById(id)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Отель с таким id не найден.")
+                );
+
+        existing.setAddress(hotel.getAddress());
+        existing.setCity(hotel.getCity());
+        existing.setName(hotel.getName());
+        existing.setRating(hotel.getRating());
+        existing.setAdTitle(hotel.getAdTitle());
+
+        return hotelMapper.toDomain(existing);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        hotelRepository.deleteById(id);
+    }
 }

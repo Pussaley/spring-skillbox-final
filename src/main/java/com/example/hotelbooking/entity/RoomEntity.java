@@ -1,19 +1,25 @@
 package com.example.hotelbooking.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "rooms")
@@ -25,18 +31,35 @@ public class RoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 200)
+    @Column(length = 200, nullable = false)
     private String name;
     @Column(columnDefinition = "LONGTEXT(1000)")
     private String description;
-    private int room;
+    @Column(name = "room_number", nullable = false)
+    private int roomNumber;
     private BigDecimal price;
     private int maxOccupancy;
     @ManyToOne
     @JoinColumn(name = "hotel_id")
     private HotelEntity hotel;
-    /*
-    TODO: рассмотреть вариант хранения в отдельной таблице
-    private List<Date> unavailabilityDays;
-    */
+    @OneToMany(
+            mappedBy = "room",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            orphanRemoval = true
+    )
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Set<BookingEntity> bookings = new HashSet<>();
+
+    public void addBooking(BookingEntity booking) {
+        booking.setRoom(this);
+        this.bookings.add(booking);
+    }
+
+    public void removeBooking(BookingEntity booking) {
+        booking.setRoom(null);
+        this.bookings.remove(booking);
+    }
+
 }

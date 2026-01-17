@@ -29,14 +29,16 @@ public class BookingEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Temporal(value = TemporalType.DATE)
-    @Column(name = "check_in")
+    @Column(name = "check_in", nullable = false)
     private Date checkInDate;
     @Temporal(value = TemporalType.DATE)
-    @Column(name = "check_out")
+    @Column(name = "check_out", nullable = false)
     private Date checkOutDate;
-    private String bookedRoomInformation;
     @ManyToOne
-    @JoinColumn(name = "quest_id")
+    @JoinColumn(name = "room_id", nullable = false)
+    private RoomEntity room;
+    @ManyToOne
+    @JoinColumn(name = "quest_id", nullable = false)
     private UserEntity quest;
 
 }

@@ -14,6 +14,7 @@ import java.util.List;
 public class Room {
     private String name;
     private String description;
+    private Hotel hotel;
     private int room;
     private BigDecimal price;
     private int maxOccupancy;
