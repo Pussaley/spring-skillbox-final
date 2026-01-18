@@ -1,7 +1,7 @@
-package com.example.hotelbooking.web.exception;
+package com.example.hotelbooking.web.controller.exception;
 
 import com.example.hotelbooking.exception.EntityNotFoundException;
-import com.example.hotelbooking.web.dto.response.ErrorResponse;
+import com.example.hotelbooking.web.dto.error.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -65,4 +65,19 @@ public class HotelServiceImpl implements HotelService {
     public void deleteById(Long id) {
         hotelRepository.deleteById(id);
     }
+
+    @Override
+    public Hotel updateRating(Long id, Double newMark) {
+        HotelEntity existing = hotelRepository.findById(id).orElseThrow();
+
+        Hotel hotel = hotelMapper.toDomain(existing);
+        hotel.calculateTotalRating(newMark);
+
+        existing.setRating(hotel.getRating());
+        existing.setNumberOfRatings(hotel.getNumberOfRatings());
+
+        HotelEntity updated = hotelRepository.save(existing);
+
+        return hotelMapper.toDomain(updated);
+    }
 }

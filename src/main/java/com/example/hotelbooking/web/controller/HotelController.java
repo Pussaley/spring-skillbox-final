@@ -3,13 +3,16 @@ package com.example.hotelbooking.web.controller;
 import com.example.hotelbooking.domain.Hotel;
 import com.example.hotelbooking.mapper.HotelMapper;
 import com.example.hotelbooking.service.HotelService;
+import com.example.hotelbooking.web.dto.other.RatingUpdateDto;
 import com.example.hotelbooking.web.dto.request.HotelRequestDto;
 import com.example.hotelbooking.web.dto.response.HotelResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -49,6 +52,7 @@ public class HotelController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<HotelResponseDto> create(
             @RequestBody HotelRequestDto hotelRequest
     ) {
@@ -62,6 +66,7 @@ public class HotelController {
     }
 
     @PutMapping
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<HotelResponseDto> create(
             @PathVariable Long id,
             @RequestBody HotelRequestDto hotelRequest
@@ -77,6 +82,7 @@ public class HotelController {
 
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<HotelResponseDto> deleteById(
             @PathVariable Long id
     ) {
@@ -84,5 +90,17 @@ public class HotelController {
         hotelService.deleteById(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/rating/{id}")
+    public ResponseEntity<HotelResponseDto> updateRating(
+            @PathVariable Long id,
+            @RequestBody RatingUpdateDto newMark
+    ) {
+        Hotel updated = hotelService.updateRating(id, newMark.value());
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                hotelMapper.toDto(updated)
+        );
     }
 }

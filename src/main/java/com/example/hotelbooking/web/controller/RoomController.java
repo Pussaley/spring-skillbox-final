@@ -8,6 +8,7 @@ import com.example.hotelbooking.web.dto.response.RoomResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/rooms")
 @RequiredArgsConstructor
@@ -24,6 +27,15 @@ public class RoomController {
 
     private final RoomService roomService;
     private final RoomMapper roomMapper;
+
+    @GetMapping
+    public ResponseEntity<List<RoomResponseDto>> findAll() {
+        return ResponseEntity.status(HttpStatus.FOUND).body(
+                roomService.findAll().stream()
+                        .map(roomMapper::toDto)
+                        .toList()
+        );
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<RoomResponseDto> findById(
@@ -37,6 +49,7 @@ public class RoomController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<RoomResponseDto> create(
             @RequestBody RoomRequestDto roomRequest
     ) {
@@ -49,6 +62,7 @@ public class RoomController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<RoomResponseDto> update(
             @PathVariable Long id,
             @RequestBody RoomRequestDto roomRequest) {
@@ -62,6 +76,7 @@ public class RoomController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<Void> deleteById(
             @PathVariable Long id
     ) {

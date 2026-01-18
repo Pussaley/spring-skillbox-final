@@ -10,4 +10,6 @@ public interface HotelService {
     Hotel create(Hotel hotel);
     Hotel update(Long id, Hotel hotel);
     void deleteById(Long id);
+
+    Hotel updateRating(Long id, Double newMark);
 }

@@ -16,4 +16,13 @@ public class Hotel {
     private double rating;
     private int numberOfRatings;
 
+    public Hotel calculateTotalRating(double newMark) {
+        double totalRating = this.rating * this.numberOfRatings;
+        totalRating = totalRating - this.rating + newMark;
+        this.rating = totalRating / numberOfRatings;
+        this.numberOfRatings++;
+
+        return this;
+    }
+
 }

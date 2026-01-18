@@ -8,6 +8,7 @@ import com.example.hotelbooking.web.dto.response.BookingResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,7 @@ public class BookingController {
     private final BookingMapper bookingMapper;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<List<BookingResponseDto>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(
                 bookingService.getAll().stream()

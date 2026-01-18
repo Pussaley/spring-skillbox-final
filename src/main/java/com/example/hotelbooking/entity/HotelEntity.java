@@ -13,6 +13,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -41,7 +42,7 @@ public class HotelEntity {
             orphanRemoval = true
     )
     @EqualsAndHashCode.Exclude
-    private Set<RoomEntity> rooms;
+    private Set<RoomEntity> rooms = new HashSet<>();
 
     public void addRoom(RoomEntity room) {
         room.setHotel(this);
