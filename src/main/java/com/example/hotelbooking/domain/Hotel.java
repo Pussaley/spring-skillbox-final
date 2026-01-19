@@ -9,10 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Hotel {
 
+    private Long id;
     private String name;
     private String adTitle;
     private String city;
     private String address;
+    private double distanceFromCenter;
     private double rating;
     private int numberOfRatings;
 

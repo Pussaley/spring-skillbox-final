@@ -1,4 +1,4 @@
-package com.example.hotelbooking.domain;
+package com.example.hotelbooking.web.dto.room.update;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,12 +9,13 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Room {
-    private long id;
+public class UpdateRoomRequestDto {
+
     private String name;
     private String description;
     private int number;
     private BigDecimal price;
-    private int maxOccupancy;
+    private long maxOccupancy;
     private long hotelId;
+
 }

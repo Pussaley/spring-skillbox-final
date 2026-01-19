@@ -1,10 +1,10 @@
-package com.example.hotelbooking.web.controller;
+package com.example.hotelbooking.web.controller.api;
 
 import com.example.hotelbooking.domain.User;
 import com.example.hotelbooking.mapper.UserMapper;
 import com.example.hotelbooking.service.UserService;
-import com.example.hotelbooking.web.dto.request.UserRequestDto;
-import com.example.hotelbooking.web.dto.response.UserResponseDto;
+import com.example.hotelbooking.web.dto.user.create.UserRequestDto;
+import com.example.hotelbooking.web.dto.user.response.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

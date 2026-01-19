@@ -3,6 +3,8 @@ package com.example.hotelbooking.entity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,21 +20,26 @@ import lombok.ToString;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "users")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Data
+@Entity
+@Table(name = "users")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
 
-    @Column(length = 50, unique = true)
+    @Column(name = "username", nullable = false, length = 50, unique = true)
     private String username;
+    @Column(name = "password", nullable = false, length = 100)
     private String password;
+    @Column(name = "email", nullable = false, length = 50, unique = true)
     private String email;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_role")
     private RoleType role;
     @OneToMany(
             mappedBy = "quest",
@@ -44,9 +51,13 @@ public class UserEntity {
     @ToString.Exclude
     private Set<BookingEntity> bookings = new HashSet<>();
 
+    @Column(name = "non_expired", nullable = false)
     private boolean accountNonExpired;
+    @Column(name = "non_locked", nullable = false)
     private boolean accountNonLocked;
+    @Column(name = "enabled", nullable = false)
     private boolean enabled;
+    @Column(name = "credentials_non_expired", nullable = false)
     private boolean credentialsNonExpired;
 
     public void addBooking(BookingEntity booking) {

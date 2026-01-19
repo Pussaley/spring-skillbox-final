@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 @Transactional
@@ -39,6 +40,10 @@ public class HotelServiceImpl implements HotelService {
     @Override
     public Hotel create(Hotel hotel) {
         HotelEntity entity = hotelMapper.toEntity(hotel);
+
+        entity.setNumberOfRatings(0);
+        entity.setRating(0);
+
         HotelEntity saved = hotelRepository.save(entity);
 
         return hotelMapper.toDomain(saved);

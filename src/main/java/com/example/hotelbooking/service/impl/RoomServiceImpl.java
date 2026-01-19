@@ -5,6 +5,7 @@ import com.example.hotelbooking.entity.RoomEntity;
 import com.example.hotelbooking.exception.EntityNotFoundException;
 import com.example.hotelbooking.mapper.RoomMapper;
 import com.example.hotelbooking.repository.RoomRepository;
+import com.example.hotelbooking.service.HotelService;
 import com.example.hotelbooking.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class RoomServiceImpl implements RoomService {
 
     private final RoomMapper roomMapper;
     private final RoomRepository roomRepository;
+    private final HotelService hotelService;
 
     @Override
     public List<Room> findAll() {

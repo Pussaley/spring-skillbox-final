@@ -21,22 +21,24 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "rooms")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Data
+@Entity
+@Table(name = "rooms")
 public class RoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
+
     @Column(length = 200, nullable = false)
     private String name;
     @Column(columnDefinition = "LONGTEXT(1000)")
     private String description;
-    @Column(name = "room_number", nullable = false)
-    private int roomNumber;
+    @Column(name = "number", nullable = false)
+    private int number;
     private BigDecimal price;
     private int maxOccupancy;
     @ManyToOne

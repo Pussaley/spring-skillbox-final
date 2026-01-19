@@ -4,7 +4,7 @@ import com.example.hotelbooking.domain.User;
 import com.example.hotelbooking.exception.EntityNotFoundException;
 import com.example.hotelbooking.mapper.UserMapper;
 import com.example.hotelbooking.repository.UserRepository;
-import com.example.hotelbooking.security.SecurityUserPrincipal;
+import com.example.hotelbooking.web.security.SecurityUserPrincipal;
 import com.example.hotelbooking.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

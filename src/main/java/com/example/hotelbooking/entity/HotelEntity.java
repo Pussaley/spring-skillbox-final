@@ -3,6 +3,7 @@ package com.example.hotelbooking.entity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,36 +13,46 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "hotels")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Data
+@Entity
+@Table(name = "hotels")
 public class HotelEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
-    @Column(length = 100)
+
+    @Column(name = "name", length = 100, unique = true)
     private String name;
-    @Column(name = "ad_title", length = 100)
+    @Column(name = "ad_title", length = 200)
     private String adTitle;
-    @Column(length = 50)
+    @Column(name = "city", length = 100)
     private String city;
+    @Column(name = "address", length = 200)
     private String address;
+    @Column(name = "distance_from_center")
+    private double distanceFromCenter;
+    @Column(name = "rating")
     private double rating;
     @Column(name = "number_of_ratings")
     private int numberOfRatings;
     @OneToMany(
+            mappedBy = "hotel",
             cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
             orphanRemoval = true
     )
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<RoomEntity> rooms = new HashSet<>();
 
     public void addRoom(RoomEntity room) {

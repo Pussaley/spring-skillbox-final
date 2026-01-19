@@ -1,20 +1,18 @@
-package com.example.hotelbooking.web.dto.response;
+package com.example.hotelbooking.web.dto.hotel.update;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class HotelResponseDto {
+public class UpdateHotelRequestDto {
 
-    private Long id;
     private String name;
     private String adTitle;
     private String city;
     private String address;
-    private double rating;
-    private int numberOfRatings;
+    private double distanceFromCenter;
 
 }

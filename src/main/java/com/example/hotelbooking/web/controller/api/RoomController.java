@@ -1,10 +1,11 @@
-package com.example.hotelbooking.web.controller;
+package com.example.hotelbooking.web.controller.api;
 
 import com.example.hotelbooking.domain.Room;
 import com.example.hotelbooking.mapper.RoomMapper;
 import com.example.hotelbooking.service.RoomService;
-import com.example.hotelbooking.web.dto.request.RoomRequestDto;
-import com.example.hotelbooking.web.dto.response.RoomResponseDto;
+import com.example.hotelbooking.web.dto.room.create.CreateRoomRequestDto;
+import com.example.hotelbooking.web.dto.room.response.RoomResponseDto;
+import com.example.hotelbooking.web.dto.room.update.UpdateRoomRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +52,7 @@ public class RoomController {
     @PostMapping
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<RoomResponseDto> create(
-            @RequestBody RoomRequestDto roomRequest
+            @RequestBody CreateRoomRequestDto roomRequest
     ) {
         Room room = roomMapper.toDomain(roomRequest);
         Room created = roomService.create(room);
@@ -65,7 +66,7 @@ public class RoomController {
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<RoomResponseDto> update(
             @PathVariable Long id,
-            @RequestBody RoomRequestDto roomRequest) {
+            @RequestBody UpdateRoomRequestDto roomRequest) {
 
         Room room = roomMapper.toDomain(roomRequest);
         Room updated = roomService.update(id, room);

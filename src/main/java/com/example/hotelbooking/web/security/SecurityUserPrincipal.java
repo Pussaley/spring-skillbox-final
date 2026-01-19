@@ -1,4 +1,4 @@
-package com.example.hotelbooking.security;
+package com.example.hotelbooking.web.security;
 
 import com.example.hotelbooking.domain.User;
 import lombok.RequiredArgsConstructor;

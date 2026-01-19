@@ -1,5 +1,6 @@
 package com.example.hotelbooking.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,27 +18,37 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "bookings")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Data
+@Entity
+@Table(name = "bookings")
 public class BookingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
+
     @Temporal(value = TemporalType.DATE)
     @Column(name = "check_in", nullable = false)
     private Date checkInDate;
     @Temporal(value = TemporalType.DATE)
     @Column(name = "check_out", nullable = false)
     private Date checkOutDate;
-    @ManyToOne
+    @ManyToOne(
+            cascade = {
+                    CascadeType.PERSIST, CascadeType.MERGE
+            }
+    )
     @JoinColumn(name = "room_id", nullable = false)
     private RoomEntity room;
-    @ManyToOne
+    @ManyToOne(
+            cascade = {
+                    CascadeType.PERSIST, CascadeType.MERGE
+            }
+    )
     @JoinColumn(name = "quest_id", nullable = false)
     private UserEntity quest;
 

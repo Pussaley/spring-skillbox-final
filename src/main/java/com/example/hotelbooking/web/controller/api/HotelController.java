@@ -1,11 +1,12 @@
-package com.example.hotelbooking.web.controller;
+package com.example.hotelbooking.web.controller.api;
 
 import com.example.hotelbooking.domain.Hotel;
 import com.example.hotelbooking.mapper.HotelMapper;
 import com.example.hotelbooking.service.HotelService;
-import com.example.hotelbooking.web.dto.other.RatingUpdateDto;
-import com.example.hotelbooking.web.dto.request.HotelRequestDto;
-import com.example.hotelbooking.web.dto.response.HotelResponseDto;
+import com.example.hotelbooking.web.dto.hotel.update.RatingUpdateDto;
+import com.example.hotelbooking.web.dto.hotel.create.CreateHotelRequestDto;
+import com.example.hotelbooking.web.dto.hotel.response.HotelResponseDto;
+import com.example.hotelbooking.web.dto.hotel.update.UpdateHotelRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +55,7 @@ public class HotelController {
     @PostMapping
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<HotelResponseDto> create(
-            @RequestBody HotelRequestDto hotelRequest
+            @RequestBody CreateHotelRequestDto hotelRequest
     ) {
 
         Hotel hotel = hotelMapper.toDomain(hotelRequest);
@@ -69,7 +70,7 @@ public class HotelController {
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<HotelResponseDto> create(
             @PathVariable Long id,
-            @RequestBody HotelRequestDto hotelRequest
+            @RequestBody UpdateHotelRequestDto hotelRequest
     ) {
 
         Hotel hotel = hotelMapper.toDomain(hotelRequest);
