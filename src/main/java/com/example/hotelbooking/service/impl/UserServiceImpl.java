@@ -22,11 +22,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private final PasswordEncoder passwordEncoder;
+
     private final UserMapper userMapper;
     private final UserRepository userRepository;
-    private final HotelMapper hotelMapper;
+
     private final BookingMapper bookingMapper;
-    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> findAll() {

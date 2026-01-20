@@ -8,7 +8,10 @@ import com.example.hotelbooking.web.dto.booking.response.BookingResponseDto;
 import org.mapstruct.Mapper;
 
 @Mapper(
-        config = MapstructMapperConfiguration.class
+        config = MapstructMapperConfiguration.class,
+        uses = {
+                RoomMapper.class, UserMapper.class
+        }
 )
 public interface BookingMapper {
     Booking toDomain(BookingRequestDto request);

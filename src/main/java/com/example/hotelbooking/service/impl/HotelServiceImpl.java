@@ -5,13 +5,18 @@ import com.example.hotelbooking.entity.HotelEntity;
 import com.example.hotelbooking.exception.EntityNotFoundException;
 import com.example.hotelbooking.mapper.HotelMapper;
 import com.example.hotelbooking.repository.HotelRepository;
+import com.example.hotelbooking.repository.specification.HotelSpecification;
+import com.example.hotelbooking.repository.specification.filter.HotelFilter;
 import com.example.hotelbooking.service.HotelService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Random;
 
 @Service
 @Transactional
@@ -84,5 +89,19 @@ public class HotelServiceImpl implements HotelService {
         HotelEntity updated = hotelRepository.save(existing);
 
         return hotelMapper.toDomain(updated);
+    }
+
+    @Override
+    public Page<Hotel> filter(HotelFilter filter, int pageNumber, int pageSize) {
+
+        Specification<HotelEntity> hotelSpecification = HotelSpecification.byFilter(filter);
+        PageRequest pageRequest = PageRequest.of(
+                pageNumber,
+                pageSize,
+                Sort.by("id")
+        );
+
+        return hotelRepository.findAll(hotelSpecification, pageRequest)
+                .map(hotelMapper::toDomain);
     }
 }

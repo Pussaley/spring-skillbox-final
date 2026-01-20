@@ -5,10 +5,12 @@ import com.example.hotelbooking.mapper.BookingMapper;
 import com.example.hotelbooking.service.BookingService;
 import com.example.hotelbooking.web.dto.booking.create.BookingRequestDto;
 import com.example.hotelbooking.web.dto.booking.response.BookingResponseDto;
+import com.example.hotelbooking.web.security.SecurityUserPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,9 +39,11 @@ public class BookingController {
 
     @PostMapping
     public ResponseEntity<BookingResponseDto> bookRoom(
+            @AuthenticationPrincipal SecurityUserPrincipal principal,
             @RequestBody BookingRequestDto bookingRequest
     ) {
         Booking booking = bookingMapper.toDomain(bookingRequest);
+        booking.setQuestId(principal.getUser().getId());
         Booking booked = bookingService.bookRoom(booking);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(

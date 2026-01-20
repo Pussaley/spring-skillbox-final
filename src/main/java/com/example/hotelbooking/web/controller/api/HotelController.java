@@ -2,12 +2,14 @@ package com.example.hotelbooking.web.controller.api;
 
 import com.example.hotelbooking.domain.Hotel;
 import com.example.hotelbooking.mapper.HotelMapper;
+import com.example.hotelbooking.repository.specification.filter.HotelFilter;
 import com.example.hotelbooking.service.HotelService;
-import com.example.hotelbooking.web.dto.hotel.update.RatingUpdateDto;
 import com.example.hotelbooking.web.dto.hotel.create.CreateHotelRequestDto;
 import com.example.hotelbooking.web.dto.hotel.response.HotelResponseDto;
+import com.example.hotelbooking.web.dto.hotel.update.RatingUpdateDto;
 import com.example.hotelbooking.web.dto.hotel.update.UpdateHotelRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -102,6 +105,23 @@ public class HotelController {
 
         return ResponseEntity.status(HttpStatus.OK).body(
                 hotelMapper.toDto(updated)
+        );
+    }
+
+    @PostMapping("/search")
+    public ResponseEntity<Page<HotelResponseDto>> filter(
+            @RequestBody HotelFilter filter,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Page<Hotel> result = hotelService.filter(
+                filter,
+                page,
+                size
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                result.map(hotelMapper::toDto)
         );
     }
 }

@@ -5,9 +5,15 @@ import com.example.hotelbooking.entity.RoomEntity;
 import com.example.hotelbooking.exception.EntityNotFoundException;
 import com.example.hotelbooking.mapper.RoomMapper;
 import com.example.hotelbooking.repository.RoomRepository;
+import com.example.hotelbooking.repository.specification.RoomSpecification;
+import com.example.hotelbooking.repository.specification.filter.RoomFilter;
 import com.example.hotelbooking.service.HotelService;
 import com.example.hotelbooking.service.RoomService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,5 +73,18 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public void deleteById(Long id) {
         roomRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<Room> filter(RoomFilter filter, int pageNumber, int pageSize) {
+
+        Specification<RoomEntity> roomSpecification = RoomSpecification.byFilter(filter);
+        PageRequest pageRequest = PageRequest.of(
+                pageNumber,
+                pageSize,
+                Sort.by("id")
+        );
+
+        return roomRepository.findAll(roomSpecification, pageRequest).map(roomMapper::toDomain);
     }
 }

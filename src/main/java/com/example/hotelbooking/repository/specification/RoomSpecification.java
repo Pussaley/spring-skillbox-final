@@ -14,7 +14,7 @@ import java.util.Date;
 @Component
 public class RoomSpecification {
 
-    public static Specification<RoomEntity> byFilter(final RoomFilter filter) {
+    public static Specification<RoomEntity> byFilter(RoomFilter filter) {
         return byRoomId(filter.getRoomId())
                 .and(byHotelId(filter.getHotelId()))
                 .and(byDates(filter.getCheckIn(), filter.getCheckOut())
@@ -23,31 +23,41 @@ public class RoomSpecification {
                 .and(byOccupancy(filter.getOccupancy()));
     }
 
-    private static Specification<RoomEntity> byRoomId(final Long id) {
+    private static Specification<RoomEntity> byRoomId(Long id) {
+
+        if (id == null) return null;
+
         return (root, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("id"), id);
     }
 
-    private static Specification<RoomEntity> byPrice(final BigDecimal minPrice, final BigDecimal maxPrice) {
+    private static Specification<RoomEntity> byPrice(BigDecimal minPrice,
+                                                     BigDecimal maxPrice) {
+
+        if (minPrice == null || maxPrice == null ) return null;
+
         return (root, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.between(root.get("price"), minPrice, maxPrice);
     }
 
-    private static Specification<RoomEntity> byOccupancy(final Integer maxOccupancy) {
+    private static Specification<RoomEntity> byOccupancy(Integer maxOccupancy) {
+
+        if (maxOccupancy == null) return null;
+
         return (root, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("maxOccupancy"), maxOccupancy);
     }
 
-    private static Specification<RoomEntity> byDates(final Date in, final Date out) {
+    private static Specification<RoomEntity> byDates(Date in,
+                                                     Date out) {
+
+        if (in == null || out == null)
+            return null;
+
+        if (!in.before(out))
+            return null;
 
         return (root, criteriaQuery, criteriaBuilder) -> {
-
-            if (in == null || out == null)
-                return null;
-
-            if (!in.before(out))
-                return null;
-
             Subquery<Long> subquery = criteriaQuery.subquery(Long.class);
             Root<BookingEntity> bookingRoot = subquery.from(BookingEntity.class);
             subquery.select(criteriaBuilder.literal(1L));
@@ -62,12 +72,18 @@ public class RoomSpecification {
 
     }
 
-    private static Specification<RoomEntity> byName(final String name) {
+    private static Specification<RoomEntity> byName(String name) {
+
+        if (name == null) return null;
+
         return (root, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("name"), name);
     }
 
-    private static Specification<RoomEntity> byHotelId(final Long hotelId) {
+    private static Specification<RoomEntity> byHotelId(Long hotelId) {
+
+        if (hotelId == null) return null;
+
         return (root, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("hotel").get("id"), hotelId);
     }

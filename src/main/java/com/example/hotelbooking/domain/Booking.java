@@ -13,6 +13,6 @@ public class Booking {
     private Long id;
     private Date checkInDate;
     private Date checkOutDate;
-    private String bookedRoomInformation;
-    private User quest;
+    private Long roomId;
+    private Long questId;
 }

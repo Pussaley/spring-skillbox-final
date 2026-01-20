@@ -1,6 +1,7 @@
 package com.example.hotelbooking.web.security;
 
 import com.example.hotelbooking.domain.User;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +12,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class SecurityUserPrincipal implements UserDetails {
 
+    @Getter
     private final User user;
 
     @Override

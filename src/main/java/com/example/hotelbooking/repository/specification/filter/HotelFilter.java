@@ -14,7 +14,8 @@ public class HotelFilter {
     private String adTitle;
     private String city;
     private String address;
-    private Double distanceFromCenter;
-    private Double totalRating;
+    private double distanceFromCenter;
+    private double totalRating;
+    private double numberOfRatings;
 
 }
