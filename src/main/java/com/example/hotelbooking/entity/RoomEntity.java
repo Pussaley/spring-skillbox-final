@@ -35,7 +35,7 @@ public class RoomEntity {
 
     @Column(length = 200, nullable = false)
     private String name;
-    @Column(columnDefinition = "LONGTEXT(1000)")
+    @Column(columnDefinition = "TEXT")
     private String description;
     @Column(name = "number", nullable = false)
     private int number;
