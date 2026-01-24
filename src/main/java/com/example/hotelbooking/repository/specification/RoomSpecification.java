@@ -10,17 +10,18 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
 @Component
 public class RoomSpecification {
 
     public static Specification<RoomEntity> byFilter(RoomFilter filter) {
         return byRoomId(filter.getRoomId())
-                .and(byHotelId(filter.getHotelId()))
-                .and(byDates(filter.getCheckIn(), filter.getCheckOut())
-                .and(byName(filter.getRoomName())))
+                .and(byName(filter.getRoomName()))
                 .and(byPrice(filter.getMinPrice(), filter.getMaxPrice()))
-                .and(byOccupancy(filter.getOccupancy()));
+                .and(byOccupancy(filter.getOccupancy()))
+                .and(byDates(filter.getCheckIn(), filter.getCheckOut()))
+                .and(byHotelId(filter.getHotelId()));
     }
 
     private static Specification<RoomEntity> byRoomId(Long id) {
@@ -34,7 +35,7 @@ public class RoomSpecification {
     private static Specification<RoomEntity> byPrice(BigDecimal minPrice,
                                                      BigDecimal maxPrice) {
 
-        if (minPrice == null || maxPrice == null ) return null;
+        if (minPrice == null || maxPrice == null) return null;
 
         return (root, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.between(root.get("price"), minPrice, maxPrice);
@@ -58,7 +59,7 @@ public class RoomSpecification {
             return null;
 
         return (root, criteriaQuery, criteriaBuilder) -> {
-            Subquery<Long> subquery = criteriaQuery.subquery(Long.class);
+            Subquery<Long> subquery = Objects.requireNonNull(criteriaQuery).subquery(Long.class);
             Root<BookingEntity> bookingRoot = subquery.from(BookingEntity.class);
             subquery.select(criteriaBuilder.literal(1L));
             subquery.where(

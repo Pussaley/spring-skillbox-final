@@ -12,13 +12,13 @@ import java.util.Date;
 @AllArgsConstructor
 public class RoomFilter {
 
-    private Long hotelId;
     private Long roomId;
     private String roomName;
-    private Date checkIn;
-    private Date checkOut;
-    private Integer occupancy;
     private BigDecimal minPrice;
     private BigDecimal maxPrice;
+    private Integer occupancy;
+    private Date checkIn;
+    private Date checkOut;
+    private Long hotelId;
 
 }
