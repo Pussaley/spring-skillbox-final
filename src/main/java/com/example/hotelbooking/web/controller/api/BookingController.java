@@ -6,6 +6,7 @@ import com.example.hotelbooking.service.BookingService;
 import com.example.hotelbooking.web.dto.booking.create.BookingRequestDto;
 import com.example.hotelbooking.web.dto.booking.response.BookingResponseDto;
 import com.example.hotelbooking.web.security.SecurityUserPrincipal;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class BookingController {
     @PostMapping
     public ResponseEntity<BookingResponseDto> bookRoom(
             @AuthenticationPrincipal SecurityUserPrincipal principal,
-            @RequestBody BookingRequestDto bookingRequest
+            @Valid @RequestBody BookingRequestDto bookingRequest
     ) {
         Booking booking = bookingMapper.toDomain(bookingRequest);
         booking.setQuestId(principal.getUser().getId());

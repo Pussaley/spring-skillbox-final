@@ -7,6 +7,7 @@ import com.example.hotelbooking.service.RoomService;
 import com.example.hotelbooking.web.dto.room.create.CreateRoomRequestDto;
 import com.example.hotelbooking.web.dto.room.response.RoomResponseDto;
 import com.example.hotelbooking.web.dto.room.update.UpdateRoomRequestDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -55,7 +56,7 @@ public class RoomController {
     @PostMapping
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<RoomResponseDto> create(
-            @RequestBody CreateRoomRequestDto roomRequest
+            @Valid @RequestBody CreateRoomRequestDto roomRequest
     ) {
         Room room = roomMapper.toDomain(roomRequest);
         Room created = roomService.create(room);
@@ -69,7 +70,7 @@ public class RoomController {
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<RoomResponseDto> update(
             @PathVariable Long id,
-            @RequestBody UpdateRoomRequestDto roomRequest) {
+            @Valid @RequestBody UpdateRoomRequestDto roomRequest) {
 
         Room room = roomMapper.toDomain(roomRequest);
         Room updated = roomService.update(id, room);
@@ -90,7 +91,7 @@ public class RoomController {
 
     @PostMapping("/search")
     public ResponseEntity<Page<RoomResponseDto>> filter(
-            @RequestBody RoomFilter filter,
+            @Valid @RequestBody RoomFilter filter,
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "20") int pageSize
     ) {

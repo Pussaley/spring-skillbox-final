@@ -5,6 +5,7 @@ import com.example.hotelbooking.mapper.UserMapper;
 import com.example.hotelbooking.service.UserService;
 import com.example.hotelbooking.web.dto.user.create.UserRequestDto;
 import com.example.hotelbooking.web.dto.user.response.UserResponseDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +51,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponseDto> create(
-            @RequestBody UserRequestDto userRequest
+            @Valid @RequestBody UserRequestDto userRequest
     ) {
         User user = userMapper.toDomain(userRequest);
         User created = userService.save(user);
@@ -63,7 +64,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDto> update(
             @PathVariable Long id,
-            @RequestBody UserRequestDto userRequest) {
+            @Valid @RequestBody UserRequestDto userRequest) {
 
         User user = userMapper.toDomain(userRequest);
         User updated = userService.update(id, user);

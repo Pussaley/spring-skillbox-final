@@ -8,6 +8,7 @@ import com.example.hotelbooking.web.dto.hotel.create.CreateHotelRequestDto;
 import com.example.hotelbooking.web.dto.hotel.response.HotelResponseDto;
 import com.example.hotelbooking.web.dto.hotel.update.RatingUpdateDto;
 import com.example.hotelbooking.web.dto.hotel.update.UpdateHotelRequestDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -58,7 +59,7 @@ public class HotelController {
     @PostMapping
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<HotelResponseDto> create(
-            @RequestBody CreateHotelRequestDto hotelRequest
+            @Valid @RequestBody CreateHotelRequestDto hotelRequest
     ) {
 
         Hotel hotel = hotelMapper.toDomain(hotelRequest);
@@ -73,7 +74,7 @@ public class HotelController {
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<HotelResponseDto> create(
             @PathVariable Long id,
-            @RequestBody UpdateHotelRequestDto hotelRequest
+            @Valid @RequestBody UpdateHotelRequestDto hotelRequest
     ) {
 
         Hotel hotel = hotelMapper.toDomain(hotelRequest);
@@ -99,7 +100,7 @@ public class HotelController {
     @PatchMapping("/rating/{id}")
     public ResponseEntity<HotelResponseDto> updateRating(
             @PathVariable Long id,
-            @RequestBody RatingUpdateDto newMark
+            @Valid @RequestBody RatingUpdateDto newMark
     ) {
         Hotel updated = hotelService.updateRating(id, newMark.value());
 
@@ -110,7 +111,7 @@ public class HotelController {
 
     @PostMapping("/search")
     public ResponseEntity<Page<HotelResponseDto>> filter(
-            @RequestBody HotelFilter filter,
+            @Valid @RequestBody HotelFilter filter,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {

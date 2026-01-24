@@ -39,6 +39,7 @@ public class RoomEntity {
     private String description;
     @Column(name = "number", nullable = false)
     private int number;
+    @Column(precision = 19, scale = 2)
     private BigDecimal price;
     private int maxOccupancy;
     @ManyToOne
