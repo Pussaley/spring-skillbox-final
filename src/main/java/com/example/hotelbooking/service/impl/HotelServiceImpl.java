@@ -9,6 +9,7 @@ import com.example.hotelbooking.repository.specification.HotelSpecification;
 import com.example.hotelbooking.repository.specification.filter.HotelFilter;
 import com.example.hotelbooking.service.HotelService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -21,6 +22,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class HotelServiceImpl implements HotelService {
 
     private final HotelMapper hotelMapper;
@@ -81,10 +83,11 @@ public class HotelServiceImpl implements HotelService {
         HotelEntity existing = hotelRepository.findById(id).orElseThrow();
 
         Hotel hotel = hotelMapper.toDomain(existing);
-        hotel.calculateTotalRating(newMark);
 
-        existing.setRating(hotel.getRating());
-        existing.setNumberOfRatings(hotel.getNumberOfRatings());
+        Hotel calculated = hotel.calculateTotalRating(newMark);
+
+        existing.setRating(calculated.getRating());
+        existing.setNumberOfRatings(calculated.getNumberOfRatings());
 
         HotelEntity updated = hotelRepository.save(existing);
 

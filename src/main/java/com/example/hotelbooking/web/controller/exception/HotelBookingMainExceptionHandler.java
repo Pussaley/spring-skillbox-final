@@ -37,7 +37,7 @@ public class HotelBookingMainExceptionHandler {
         );
     }
 
-    @ExceptionHandler(Throwable.class)
+/*    @ExceptionHandler(Throwable.class)
     public ResponseEntity<ErrorResponse> internal(Throwable throwable) {
         final String message = throwable.getMessage();
 
@@ -46,6 +46,6 @@ public class HotelBookingMainExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                 new ErrorResponse(message)
         );
-    }
+    }*/
 
 }

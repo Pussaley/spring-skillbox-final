@@ -1,6 +1,7 @@
 package com.example.hotelbooking.web.controller.api;
 
 import com.example.hotelbooking.domain.User;
+import com.example.hotelbooking.entity.RoleType;
 import com.example.hotelbooking.mapper.UserMapper;
 import com.example.hotelbooking.service.UserService;
 import com.example.hotelbooking.web.dto.user.create.UserRequestDto;

@@ -1,6 +1,7 @@
 package com.example.hotelbooking.service.impl;
 
 import com.example.hotelbooking.domain.User;
+import com.example.hotelbooking.entity.RoleType;
 import com.example.hotelbooking.entity.UserEntity;
 import com.example.hotelbooking.exception.EntityNotFoundException;
 import com.example.hotelbooking.exception.UserAlreadyExistsException;
@@ -61,7 +62,15 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistsException("Пользователь с таким username и email уже зарегистрирован в системе!");
 
         UserEntity newUser = userMapper.toEntity(user);
+
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (newUser.getRole() == null) newUser.setRole(RoleType.USER);
+
+        newUser.setAccountNonExpired(true);
+        newUser.setCredentialsNonExpired(true);
+        newUser.setAccountNonLocked(true);
+        newUser.setEnabled(true);
+
         UserEntity savedUser = userRepository.save(newUser);
 
         return userMapper.toDomain(savedUser);
