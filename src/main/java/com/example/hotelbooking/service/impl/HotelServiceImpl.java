@@ -84,10 +84,10 @@ public class HotelServiceImpl implements HotelService {
 
         Hotel hotel = hotelMapper.toDomain(existing);
 
-        Hotel calculated = hotel.calculateTotalRating(newMark);
+        hotel.calculateTotalRating(newMark);
 
-        existing.setRating(calculated.getRating());
-        existing.setNumberOfRatings(calculated.getNumberOfRatings());
+        existing.setRating(hotel.getRating());
+        existing.setNumberOfRatings(hotel.getNumberOfRatings());
 
         HotelEntity updated = hotelRepository.save(existing);
 

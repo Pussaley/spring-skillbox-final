@@ -21,7 +21,7 @@ public class Hotel {
     private Double rating;
     private int numberOfRatings;
 
-    public Hotel calculateTotalRating(double newMark) {
+    public void calculateTotalRating(double newMark) {
 
         BigDecimal currentRating = BigDecimal.valueOf(this.rating);
         BigDecimal currentNumbOfRatings = BigDecimal.valueOf(this.numberOfRatings);
@@ -34,8 +34,6 @@ public class Hotel {
         BigDecimal newAverage = totalSum.divide(BigDecimal.valueOf(this.numberOfRatings), 2, RoundingMode.HALF_UP);
 
         this.rating = newAverage.doubleValue();
-
-        return this;
     }
 
 }
