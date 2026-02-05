@@ -35,7 +35,7 @@ public class RoomController {
 
     @GetMapping
     public ResponseEntity<List<RoomResponseDto>> findAll() {
-        return ResponseEntity.status(HttpStatus.FOUND).body(
+        return ResponseEntity.status(HttpStatus.OK).body(
                 roomService.findAll().stream()
                         .map(roomMapper::toDto)
                         .toList()
@@ -48,7 +48,7 @@ public class RoomController {
     ) {
         Room room = roomService.findById(id);
 
-        return ResponseEntity.status(HttpStatus.FOUND).body(
+        return ResponseEntity.status(HttpStatus.OK).body(
                 roomMapper.toDto(room)
         );
     }

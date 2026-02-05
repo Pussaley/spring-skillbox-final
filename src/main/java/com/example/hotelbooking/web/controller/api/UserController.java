@@ -1,7 +1,6 @@
 package com.example.hotelbooking.web.controller.api;
 
 import com.example.hotelbooking.domain.User;
-import com.example.hotelbooking.entity.RoleType;
 import com.example.hotelbooking.mapper.UserMapper;
 import com.example.hotelbooking.service.UserService;
 import com.example.hotelbooking.web.dto.user.create.UserRequestDto;
@@ -32,7 +31,7 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> getAll() {
 
-        return ResponseEntity.status(HttpStatus.FOUND).body(
+        return ResponseEntity.status(HttpStatus.OK).body(
                 userService.findAll().stream()
                         .map(userMapper::toDto)
                         .toList()
@@ -45,7 +44,7 @@ public class UserController {
     ) {
         User user = userService.findById(id);
 
-        return ResponseEntity.status(HttpStatus.FOUND).body(
+        return ResponseEntity.status(HttpStatus.OK).body(
                 userMapper.toDto(user)
         );
     }
