@@ -1,5 +1,6 @@
 package com.example.hotelbooking.service.impl;
 
+import com.example.hotelbooking.domain.Hotel;
 import com.example.hotelbooking.domain.Room;
 import com.example.hotelbooking.entity.RoomEntity;
 import com.example.hotelbooking.exception.EntityNotFoundException;
@@ -46,7 +47,9 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Room create(Room room) {
 
-        RoomEntity newRoom = roomMapper.toEntity(room);
+        Hotel hotel = hotelService.findById(room.getHotelId());
+        RoomEntity newRoom = roomMapper.toEntity(room, hotel);
+
         RoomEntity createdRoom = roomRepository.save(newRoom);
 
         return roomMapper.toDomain(createdRoom);

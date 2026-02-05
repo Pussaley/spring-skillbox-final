@@ -13,8 +13,8 @@ public class Room {
     private Long id;
     private String name;
     private String description;
-    private int number;
+    private Integer number;
     private BigDecimal price;
-    private int maxOccupancy;
-    private long hotelId;
+    private Integer maxOccupancy;
+    private Long hotelId;
 }
