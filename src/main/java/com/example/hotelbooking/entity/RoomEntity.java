@@ -38,10 +38,11 @@ public class RoomEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
     @Column(name = "number", nullable = false)
-    private int number;
-    @Column(precision = 19, scale = 2)
+    private Integer number;
+    @Column(precision = 19, scale = 2, nullable = false)
     private BigDecimal price;
-    private int maxOccupancy;
+    @Column(name = "max_occupancy", nullable = false)
+    private Integer maxOccupancy;
     @ManyToOne
     @JoinColumn(name = "hotel_id")
     private HotelEntity hotel;

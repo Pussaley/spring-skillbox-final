@@ -40,11 +40,11 @@ public class HotelEntity {
     @Column(name = "address", length = 200)
     private String address;
     @Column(name = "distance_from_center")
-    private double distanceFromCenter;
+    private Double distanceFromCenter;
     @Column(name = "rating")
-    private double rating;
+    private Double rating;
     @Column(name = "number_of_ratings")
-    private int numberOfRatings;
+    private Integer numberOfRatings;
     @OneToMany(
             mappedBy = "hotel",
             cascade = CascadeType.ALL,
