@@ -16,7 +16,11 @@ import java.util.Objects;
 public class RoomSpecification {
 
     public static Specification<RoomEntity> byFilter(RoomFilter filter) {
-        return byRoomId(filter.getRoomId())
+
+        Specification<RoomEntity> specification = Specification.unrestricted();
+
+        return specification
+                .and(byRoomId(filter.getRoomId()))
                 .and(byName(filter.getRoomName()))
                 .and(byPrice(filter.getMinPrice(), filter.getMaxPrice()))
                 .and(byOccupancy(filter.getOccupancy()))
@@ -63,7 +67,7 @@ public class RoomSpecification {
             Root<BookingEntity> bookingRoot = subquery.from(BookingEntity.class);
             subquery.select(criteriaBuilder.literal(1L));
             subquery.where(
-                    criteriaBuilder.equal(root.get("room"), bookingRoot.get("room")),
+                    criteriaBuilder.equal(root, bookingRoot.get("room")),
                     criteriaBuilder.lessThan(bookingRoot.get("checkInDate"), out),
                     criteriaBuilder.greaterThan(bookingRoot.get("checkOutDate"), in)
             );
