@@ -49,7 +49,7 @@ public class HotelServiceImpl implements HotelService {
         HotelEntity entity = hotelMapper.toEntity(hotel);
 
         entity.setNumberOfRatings(0);
-        entity.setRating(0);
+        entity.setRating(0.0);
 
         HotelEntity saved = hotelRepository.save(entity);
 

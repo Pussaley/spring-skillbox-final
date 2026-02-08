@@ -39,14 +39,16 @@ public class BookingEntity {
     private Date checkOutDate;
     @ManyToOne(
             cascade = {
-                    CascadeType.PERSIST, CascadeType.MERGE
+                    //CascadeType.PERSIST,
+                    CascadeType.MERGE
             }
     )
     @JoinColumn(name = "room_id", nullable = false)
     private RoomEntity room;
     @ManyToOne(
             cascade = {
-                    CascadeType.PERSIST, CascadeType.MERGE
+                    //CascadeType.PERSIST,
+                    CascadeType.MERGE
             }
     )
     @JoinColumn(name = "quest_id", nullable = false)

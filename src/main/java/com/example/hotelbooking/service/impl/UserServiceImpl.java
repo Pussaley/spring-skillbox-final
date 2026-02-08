@@ -11,6 +11,7 @@ import com.example.hotelbooking.mapper.UserMapper;
 import com.example.hotelbooking.repository.UserRepository;
 import com.example.hotelbooking.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,11 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
 
-    private final BookingMapper bookingMapper;
+    private BookingMapper bookingMapper;
+
+    public void setBookingMapper(BookingMapper bookingMapper) {
+        this.bookingMapper = bookingMapper;
+    }
 
     @Override
     public List<User> findAll() {
