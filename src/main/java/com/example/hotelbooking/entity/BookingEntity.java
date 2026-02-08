@@ -38,18 +38,12 @@ public class BookingEntity {
     @Column(name = "check_out", nullable = false)
     private Date checkOutDate;
     @ManyToOne(
-            cascade = {
-                    //CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }
+            cascade = CascadeType.MERGE
     )
     @JoinColumn(name = "room_id", nullable = false)
     private RoomEntity room;
     @ManyToOne(
-            cascade = {
-                    //CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }
+            cascade = CascadeType.MERGE
     )
     @JoinColumn(name = "quest_id", nullable = false)
     private UserEntity quest;
