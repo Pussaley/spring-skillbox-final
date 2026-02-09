@@ -4,7 +4,7 @@ import com.example.hotelbooking.config.mapper.MapstructMapperConfiguration;
 import com.example.hotelbooking.domain.Hotel;
 import com.example.hotelbooking.domain.Room;
 import com.example.hotelbooking.entity.RoomEntity;
-import com.example.hotelbooking.service.HotelService;
+import com.example.hotelbooking.service.domain.HotelService;
 import com.example.hotelbooking.web.dto.room.create.CreateRoomRequestDto;
 import com.example.hotelbooking.web.dto.room.response.RoomResponseDto;
 import com.example.hotelbooking.web.dto.room.update.UpdateRoomRequestDto;

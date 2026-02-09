@@ -1,4 +1,4 @@
-package com.example.hotelbooking.service.impl;
+package com.example.hotelbooking.service.domain.impl;
 
 import com.example.hotelbooking.domain.User;
 import com.example.hotelbooking.entity.RoleType;
@@ -6,12 +6,10 @@ import com.example.hotelbooking.entity.UserEntity;
 import com.example.hotelbooking.exception.EntityNotFoundException;
 import com.example.hotelbooking.exception.UserAlreadyExistsException;
 import com.example.hotelbooking.mapper.BookingMapper;
-import com.example.hotelbooking.mapper.HotelMapper;
 import com.example.hotelbooking.mapper.UserMapper;
 import com.example.hotelbooking.repository.UserRepository;
-import com.example.hotelbooking.service.UserService;
+import com.example.hotelbooking.service.domain.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package com.example.hotelbooking.service.impl;
+package com.example.hotelbooking.service.domain.impl;
 
 import com.example.hotelbooking.domain.Hotel;
 import com.example.hotelbooking.entity.HotelEntity;
@@ -7,7 +7,7 @@ import com.example.hotelbooking.mapper.HotelMapper;
 import com.example.hotelbooking.repository.HotelRepository;
 import com.example.hotelbooking.repository.specification.HotelSpecification;
 import com.example.hotelbooking.repository.specification.filter.HotelFilter;
-import com.example.hotelbooking.service.HotelService;
+import com.example.hotelbooking.service.domain.HotelService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

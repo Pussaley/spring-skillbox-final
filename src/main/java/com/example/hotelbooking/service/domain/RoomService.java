@@ -1,4 +1,4 @@
-package com.example.hotelbooking.service;
+package com.example.hotelbooking.service.domain;
 
 import com.example.hotelbooking.domain.Room;
 import com.example.hotelbooking.repository.specification.filter.RoomFilter;

@@ -1,10 +1,10 @@
-package com.example.hotelbooking.service.impl;
+package com.example.hotelbooking.service.domain.impl;
 
 import com.example.hotelbooking.domain.Booking;
 import com.example.hotelbooking.entity.BookingEntity;
 import com.example.hotelbooking.mapper.BookingMapper;
 import com.example.hotelbooking.repository.BookingRepository;
-import com.example.hotelbooking.service.BookingService;
+import com.example.hotelbooking.service.domain.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
