@@ -18,3 +18,12 @@ spring:
 logging:
   level:
     org.springframework.security: DEBUG
+
+app:
+  settings:
+    kafka:
+      consumer:
+        group-id: default-group-id
+      common:
+        bootstrap-servers: localhost:9092
+        trusted-packages: com.example.hotelbooking.messaging
