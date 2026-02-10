@@ -32,6 +32,8 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
+    implementation("org.springframework.kafka:spring-kafka")
+
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
 
