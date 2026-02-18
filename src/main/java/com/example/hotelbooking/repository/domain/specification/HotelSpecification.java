@@ -1,7 +1,7 @@
-package com.example.hotelbooking.repository.specification;
+package com.example.hotelbooking.repository.domain.specification;
 
 import com.example.hotelbooking.entity.HotelEntity;
-import com.example.hotelbooking.repository.specification.filter.HotelFilter;
+import com.example.hotelbooking.repository.domain.specification.filter.HotelFilter;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 

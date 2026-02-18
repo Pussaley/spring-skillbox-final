@@ -25,10 +25,14 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+
     implementation("org.springframework.boot:spring-boot-starter-security")
+
+    implementation("org.apache.commons:commons-csv:1.14.1")
 
     implementation("org.springframework.boot:spring-boot-starter-validation")
 

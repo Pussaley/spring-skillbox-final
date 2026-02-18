@@ -7,7 +7,8 @@ import com.example.hotelbooking.exception.EntityNotFoundException;
 import com.example.hotelbooking.exception.UserAlreadyExistsException;
 import com.example.hotelbooking.mapper.BookingMapper;
 import com.example.hotelbooking.mapper.UserMapper;
-import com.example.hotelbooking.repository.UserRepository;
+import com.example.hotelbooking.messaging.producer.UserRegistrationKafkaProducer;
+import com.example.hotelbooking.repository.domain.UserRepository;
 import com.example.hotelbooking.service.domain.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +27,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final UserRepository userRepository;
+
+    private final UserRegistrationKafkaProducer userRegistrationKafkaProducer;
 
     private BookingMapper bookingMapper;
 
@@ -75,6 +78,8 @@ public class UserServiceImpl implements UserService {
         newUser.setEnabled(true);
 
         UserEntity savedUser = userRepository.save(newUser);
+
+        userRegistrationKafkaProducer.send(savedUser.getId());
 
         return userMapper.toDomain(savedUser);
     }

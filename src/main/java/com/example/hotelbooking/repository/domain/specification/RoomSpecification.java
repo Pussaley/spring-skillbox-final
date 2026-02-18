@@ -1,8 +1,8 @@
-package com.example.hotelbooking.repository.specification;
+package com.example.hotelbooking.repository.domain.specification;
 
 import com.example.hotelbooking.entity.BookingEntity;
 import com.example.hotelbooking.entity.RoomEntity;
-import com.example.hotelbooking.repository.specification.filter.RoomFilter;
+import com.example.hotelbooking.repository.domain.specification.filter.RoomFilter;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.criteria.Subquery;
 import org.springframework.data.jpa.domain.Specification;

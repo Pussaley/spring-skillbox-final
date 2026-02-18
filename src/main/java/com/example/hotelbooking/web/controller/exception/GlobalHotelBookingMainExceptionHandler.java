@@ -1,7 +1,7 @@
 package com.example.hotelbooking.web.controller.exception;
 
 import com.example.hotelbooking.exception.EntityNotFoundException;
-import com.example.hotelbooking.web.dto.error.ErrorResponse;
+import com.example.hotelbooking.web.dto.error.ExceptionResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,39 +13,30 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @RestControllerAdvice
-public class HotelBookingMainExceptionHandler {
+public class GlobalHotelBookingMainExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponse> notFound(EntityNotFoundException exception) {
+    public ResponseEntity<ExceptionResponse> notFound(EntityNotFoundException exception) {
         final String message = exception.getMessage();
+        final HttpStatus httpStatus = HttpStatus.NOT_FOUND;
 
         log.debug("EntityNotFoundException.class, timestamp: {}", LocalDateTime.now());
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                new ErrorResponse(message)
+        return ResponseEntity.status(httpStatus).body(
+                new ExceptionResponse(httpStatus.value(), message)
         );
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> badRequest(MethodArgumentNotValidException exception) {
+    public ResponseEntity<ExceptionResponse> badRequest(MethodArgumentNotValidException exception) {
         final String message = exception.getMessage();
+        final HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
 
         log.debug("MethodArgumentNotValidException.class, timestamp: {}", LocalDateTime.now());
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ErrorResponse(message)
+        return ResponseEntity.status(httpStatus).body(
+                new ExceptionResponse(httpStatus.value(), message)
         );
     }
-
-/*    @ExceptionHandler(Throwable.class)
-    public ResponseEntity<ErrorResponse> internal(Throwable throwable) {
-        final String message = throwable.getMessage();
-
-        log.debug("Internal Server Error by Throwable.class: {}, timestamp: {}", throwable.getCause().getClass().getName(), LocalDateTime.now());
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                new ErrorResponse(message)
-        );
-    }*/
 
 }

@@ -1,4 +1,4 @@
-package com.example.hotelbooking.repository.specification.filter;
+package com.example.hotelbooking.repository.domain.specification.filter;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

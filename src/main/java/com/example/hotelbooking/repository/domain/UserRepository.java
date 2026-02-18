@@ -1,4 +1,4 @@
-package com.example.hotelbooking.repository;
+package com.example.hotelbooking.repository.domain;
 
 import com.example.hotelbooking.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

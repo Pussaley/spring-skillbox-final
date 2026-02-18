@@ -3,7 +3,8 @@ package com.example.hotelbooking.service.domain.impl;
 import com.example.hotelbooking.domain.Booking;
 import com.example.hotelbooking.entity.BookingEntity;
 import com.example.hotelbooking.mapper.BookingMapper;
-import com.example.hotelbooking.repository.BookingRepository;
+import com.example.hotelbooking.messaging.producer.RoomReservationKafkaProducer;
+import com.example.hotelbooking.repository.domain.BookingRepository;
 import com.example.hotelbooking.service.domain.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class BookingServiceImpl implements BookingService {
     private final BookingMapper bookingMapper;
     private final BookingRepository bookingRepository;
 
+    private final RoomReservationKafkaProducer roomReservationKafkaProducer;
+
     @Override
     public List<Booking> getAll() {
         return bookingRepository.findAll().stream()
@@ -31,6 +34,8 @@ public class BookingServiceImpl implements BookingService {
 
         BookingEntity entity = bookingMapper.toEntity(booking);
         BookingEntity booked = bookingRepository.save(entity);
+
+        roomReservationKafkaProducer.send(booking.getQuestId(), booking.getCheckInDate(), booking.getCheckOutDate());
 
         return bookingMapper.toDomain(booked);
     }

@@ -1,7 +1,7 @@
 package com.example.hotelbooking.service.domain;
 
 import com.example.hotelbooking.domain.Room;
-import com.example.hotelbooking.repository.specification.filter.RoomFilter;
+import com.example.hotelbooking.repository.domain.specification.filter.RoomFilter;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
