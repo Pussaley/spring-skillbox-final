@@ -14,5 +14,6 @@ public class Booking {
     private Date checkInDate;
     private Date checkOutDate;
     private Long roomId;
+    private Long hotelId;
     private Long questId;
 }

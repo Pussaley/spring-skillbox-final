@@ -9,6 +9,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class RoomReservationEvent {
     private final Long questId;
+    private final Long hotelId;
+    private final Long roomId;
     private final Date checkIn;
     private final Date checkOut;
 }
