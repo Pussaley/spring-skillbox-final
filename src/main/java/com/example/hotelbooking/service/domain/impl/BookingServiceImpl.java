@@ -4,7 +4,6 @@ import com.example.hotelbooking.domain.Booking;
 import com.example.hotelbooking.domain.Room;
 import com.example.hotelbooking.entity.BookingEntity;
 import com.example.hotelbooking.mapper.BookingMapper;
-import com.example.hotelbooking.messaging.ReservationInfo;
 import com.example.hotelbooking.messaging.producer.RoomReservationKafkaProducer;
 import com.example.hotelbooking.repository.domain.BookingRepository;
 import com.example.hotelbooking.service.domain.BookingService;
@@ -49,13 +48,13 @@ public class BookingServiceImpl implements BookingService {
         BookingEntity entity = bookingMapper.toEntity(booking);
         BookingEntity booked = bookingRepository.save(entity);
 
-        roomReservationKafkaProducer.send(new ReservationInfo(
+        roomReservationKafkaProducer.send(
                 booking.getQuestId(),
                 hotelId,
                 booking.getRoomId(),
                 booking.getCheckInDate(),
                 booking.getCheckOutDate()
-        ));
+        );
 
         return bookingMapper.toDomain(booked);
     }

@@ -1,8 +1,8 @@
 package com.example.hotelbooking.statistic.controller;
 
+import com.example.hotelbooking.statistic.dto.response.StatisticsResponseDto;
 import com.example.hotelbooking.statistic.service.StatisticService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,28 +12,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.ByteArrayOutputStream;
-
 @RestController
 @RequestMapping("/statistics")
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMINISTRATOR')")
-public class StatisticController {
+public class AdminStatisticController {
 
     private final StatisticService statisticService;
 
     @GetMapping
-    public ResponseEntity<Resource> getStatistics() {
+    public ResponseEntity<byte[]> getStatistics() {
 
-        Object statistics = statisticService.getStatistics();
-
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        StatisticsResponseDto statistics = statisticService.getStatistics();
+        String contentType = statistics.getContentType();
+        byte[] content = statistics.getFileContent();
 
         return ResponseEntity.status(HttpStatus.OK)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=users.csv")
-                .contentType(MediaType.parseMediaType("text/csv"))
-                .body(resource);
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=statistics.csv")
+                .contentType(MediaType.parseMediaType(contentType))
+                .body(content);
     }
 
 }

@@ -1,8 +1,6 @@
 package com.example.hotelbooking.messaging.producer;
 
-import com.example.hotelbooking.messaging.ReservationInfo;
-import com.example.hotelbooking.messaging.dto.RoomReservationEvent;
-import lombok.NonNull;
+import com.example.hotelbooking.messaging.events.RoomReservationEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -17,17 +15,9 @@ public class RoomReservationKafkaProducer {
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
-    public void send(@NonNull ReservationInfo data) {
+    public void send(Long questId, Long hotelId, Long roomId, Date checkIn, Date checkOut) {
 
-        Date checkIn = data.checkIn();
-        Date checkOut = data.checkOut();
-        Long questId = data.questId();
-        Long roomId = data.roomId();
-        Long hotelId = data.hotelId();
-
-        RoomReservationEvent event = new RoomReservationEvent(
-                questId, hotelId, roomId, checkIn, checkOut
-        );
+        RoomReservationEvent event = new RoomReservationEvent(questId, hotelId, roomId, checkIn, checkOut);
         kafkaTemplate.send("room-reservation-topic", event);
     }
 
