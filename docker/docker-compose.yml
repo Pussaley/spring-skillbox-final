@@ -1,9 +1,9 @@
 services:
   kafka:
-    image: apache/kafka:latest
+    image: apache/kafka:4.2.0
     container_name: cn_kafka
     volumes:
-      - v_kafka:/bitnami/kafka
+      - v_kafka:/var/lib/kafka/data
     ports:
       - "9092:9092"
     environment:
@@ -21,6 +21,8 @@ services:
       KAFKA_DEFAULT_REPLICATION_FACTOR: 1
       KAFKA_LOG4J_ROOT_LOGLEVEL: INFO
 
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
 
 
   mongodb:
@@ -31,8 +33,8 @@ services:
     volumes:
       - v_mongoDB:/data/db
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
       MONGO_INITDB_DATABASE: hotelbooking_mongodb
 
 
@@ -46,9 +48,9 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - v_pgdata:/var/lib/postgresql/data
     environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: hotelbooking_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
 
 volumes:
   v_kafka:

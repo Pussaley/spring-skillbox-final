@@ -14,16 +14,21 @@ spring:
     driver-class-name: org.postgresql.Driver
     hikari:
       schema: hotel_booking_schema
+  data:
+    mongodb:
+      uri: mongodb://root:root@localhost:27017/hotelbooking_mongodb?authSource=admin
 
 logging:
   level:
     org.springframework.security: DEBUG
+#    org.springframework.kafka: DEBUG
+#    org.apache.kafka: DEBUG
 
 app:
   settings:
     kafka:
       consumer:
-        group-id: default-group-id
+        group-id: default-group-id-test
       common:
         bootstrap-servers: localhost:9092
-        trusted-packages: com.example.hotelbooking.statistic_layer.messaging
+        trusted-packages: com.example.hotelbooking.messaging.events

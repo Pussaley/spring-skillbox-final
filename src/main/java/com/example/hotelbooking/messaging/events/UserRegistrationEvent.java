@@ -1,14 +1,10 @@
 package com.example.hotelbooking.messaging.events;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-
-import java.time.LocalDateTime;
+import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@Getter
+@NoArgsConstructor
 public class UserRegistrationEvent {
-    private final Long questId;
+    private Long questId;
 }

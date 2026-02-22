@@ -14,7 +14,8 @@ public class UserRegistrationKafkaProducer {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void send(Long questId) {
-        UserRegistrationEvent event = new UserRegistrationEvent(questId);
+        UserRegistrationEvent event = new UserRegistrationEvent();
+        event.setQuestId(questId);
         kafkaTemplate.send("user-registration-topic", event);
     }
 

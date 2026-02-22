@@ -49,6 +49,9 @@ public class StatisticsKafkaListener {
                         .toLocalDateTime(),
                 fields
         );
+
+        log.info("try to save");
+
         statisticService.save(statisticsDto);
 
         log.info("Processed the message ...");

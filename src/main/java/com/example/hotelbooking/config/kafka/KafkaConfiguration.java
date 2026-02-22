@@ -1,5 +1,6 @@
 package com.example.hotelbooking.config.kafka;
 
+import com.example.hotelbooking.messaging.events.UserRegistrationEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -39,7 +40,9 @@ public class KafkaConfiguration {
         configs.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         configs.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 
-        return new DefaultKafkaProducerFactory<>(configs);
+        return new DefaultKafkaProducerFactory<>(configs,
+                new StringSerializer(),
+                new JsonSerializer<>());
     }
 
     @Bean
@@ -50,23 +53,26 @@ public class KafkaConfiguration {
     }
 
     @Bean
-    public ConsumerFactory<String, Object> consumerFactory() {
+    public ConsumerFactory<String, UserRegistrationEvent> consumerFactory() {
         Map<String, Object> configs = new HashMap<>();
 
         configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         configs.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configs.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+        configs.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         configs.put(JsonDeserializer.TRUSTED_PACKAGES, trustedPackages);
 
-        return new DefaultKafkaConsumerFactory<>(configs);
+        return new DefaultKafkaConsumerFactory<>(configs,
+                new StringDeserializer(),
+                new JsonDeserializer<>(UserRegistrationEvent.class, false));
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory(
-        ConsumerFactory<String, Object> consumerFactory
+    public ConcurrentKafkaListenerContainerFactory<String, UserRegistrationEvent> kafkaListenerContainerFactory(
+        ConsumerFactory<String, UserRegistrationEvent> consumerFactory
     ) {
-        ConcurrentKafkaListenerContainerFactory<String, Object> factory
+        ConcurrentKafkaListenerContainerFactory<String, UserRegistrationEvent> factory
                 = new ConcurrentKafkaListenerContainerFactory<>();
 
         factory.setConsumerFactory(consumerFactory);
