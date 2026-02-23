@@ -7,13 +7,13 @@ import java.time.LocalDateTime;
 @Getter
 public class ExceptionResponse {
 
-    private final int status;
     private final String message;
+    private final int status;
     private final LocalDateTime timestamp;
 
-    public ExceptionResponse(int status, String message) {
-        this.status = status;
+    public ExceptionResponse(String message, int status) {
         this.message = message;
+        this.status = status;
         this.timestamp = LocalDateTime.now();
     }
 }

@@ -52,7 +52,12 @@ public class MongoDBStatisticService implements StatisticService {
 
                     List<Object> values = headers.stream()
                             .map(header -> {
-                                StatisticsKeys key = StatisticsKeys.valueOf(header);
+
+                                String headerKey = header
+                                        .replaceAll("([a-z])([A-Z])", "$1_$2")
+                                        .toUpperCase();
+
+                                StatisticsKeys key = StatisticsKeys.valueOf(headerKey);
                                 return statisticsInfoMongoDB.getPayload().getOrDefault(key, "");
                             })
                             .collect(Collectors.toList());

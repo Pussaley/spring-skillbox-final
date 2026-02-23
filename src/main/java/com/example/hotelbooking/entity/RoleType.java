@@ -7,6 +7,6 @@ public enum RoleType {
     USER, ADMINISTRATOR;
 
     public GrantedAuthority toGrantedAuthority() {
-        return new SimpleGrantedAuthority(name());
+        return new SimpleGrantedAuthority("ROLE_" + name());
     }
 }
