@@ -1,6 +1,6 @@
 package com.example.hotelbooking.web.dto.user.create;
 
-import com.example.hotelbooking.entity.RoleType;
+import com.example.hotelbooking.domain.entity.RoleType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

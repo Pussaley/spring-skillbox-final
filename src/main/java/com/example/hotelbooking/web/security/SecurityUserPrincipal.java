@@ -1,6 +1,6 @@
 package com.example.hotelbooking.web.security;
 
-import com.example.hotelbooking.domain.User;
+import com.example.hotelbooking.domain.dto.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

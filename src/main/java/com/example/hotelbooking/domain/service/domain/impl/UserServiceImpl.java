@@ -1,0 +1,124 @@
+package com.example.hotelbooking.domain.service.domain.impl;
+
+import com.example.hotelbooking.domain.dto.User;
+import com.example.hotelbooking.domain.entity.RoleType;
+import com.example.hotelbooking.domain.entity.UserEntity;
+import com.example.hotelbooking.domain.mapper.BookingMapper;
+import com.example.hotelbooking.domain.mapper.UserMapper;
+import com.example.hotelbooking.domain.repository.domain.UserRepository;
+import com.example.hotelbooking.domain.service.domain.UserService;
+import com.example.hotelbooking.domain.exception.EntityNotFoundException;
+import com.example.hotelbooking.domain.exception.UserAlreadyExistsException;
+import com.example.hotelbooking.messaging.producer.UserRegistrationKafkaProducer;
+import com.example.hotelbooking.web.security.SecurityUserPrincipal;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@Transactional
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService, UserDetailsService {
+
+    private final PasswordEncoder passwordEncoder;
+
+    private final UserMapper userMapper;
+    private final UserRepository userRepository;
+
+    private final UserRegistrationKafkaProducer userRegistrationKafkaProducer;
+
+    private BookingMapper bookingMapper;
+
+    public void setBookingMapper(BookingMapper bookingMapper) {
+        this.bookingMapper = bookingMapper;
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll().stream()
+                .map(userMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public User findById(Long id) throws EntityNotFoundException {
+        return userRepository.findById(id)
+                .map(userMapper::toDomain)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Пользователь с таким id не найден.")
+                );
+    }
+
+    @Override
+    public User findByUsername(String username) throws EntityNotFoundException {
+        return userRepository.findByUsername(username)
+                .map(userMapper::toDomain)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Пользователь с таким username не найден.")
+                );
+    }
+
+    @Override
+    public User save(User user) throws UserAlreadyExistsException {
+
+        if (userRepository.existsByUsernameAndEmail(user.getUsername(), user.getEmail()))
+            throw new UserAlreadyExistsException("Пользователь с таким username и email уже зарегистрирован в системе!");
+
+        UserEntity newUser = userMapper.toEntity(user);
+
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (newUser.getRole() == null) newUser.setRole(RoleType.USER);
+
+        newUser.setAccountNonExpired(true);
+        newUser.setCredentialsNonExpired(true);
+        newUser.setAccountNonLocked(true);
+        newUser.setEnabled(true);
+
+        UserEntity savedUser = userRepository.save(newUser);
+
+        userRegistrationKafkaProducer.send(savedUser.getId());
+
+        return userMapper.toDomain(savedUser);
+    }
+
+    @Override
+    public User update(Long id, User user) throws EntityNotFoundException {
+
+        UserEntity existing = userRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Пользователь с таким id не найден.")
+        );
+
+        existing.setBookings(user.getBookings().stream()
+                .map(bookingMapper::toEntity)
+                .collect(Collectors.toSet()));
+        existing.setRole(user.getRole());
+        existing.setEmail(user.getEmail());
+        existing.setPassword(user.getPassword());
+
+        UserEntity saved = userRepository.save(existing);
+
+        return userMapper.toDomain(saved);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        try {
+            User user = findByUsername(username);
+            return new SecurityUserPrincipal(user);
+        } catch (EntityNotFoundException exception) {
+            throw new UsernameNotFoundException(exception.getLocalizedMessage());
+        }
+    }
+}

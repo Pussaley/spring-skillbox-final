@@ -48,24 +48,23 @@ public class SpringSecurityConfiguration {
                 .build();
     }
 
-
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {
         return (request, response, authException) -> {
+            response.setHeader("WWW-Authenticate", "Basic realm=\"Hotel Booking Service\"");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json;charset=UTF-8");
 
             String jsonResponse = """
             {
-                "timestamp": "%s",
+                "message": "Неверные учетные данные пользователя",
                 "status": 401,
-                "message": "Неверные учетные данные пользователя"
+                "timestamp": "%s"
             }
             """.formatted(ZonedDateTime.now(java.time.ZoneOffset.UTC).toString());
 
             response.getWriter().write(jsonResponse);
         };
     }
-
 
 }

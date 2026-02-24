@@ -1,9 +1,9 @@
 package com.example.hotelbooking.web.controller.api;
 
-import com.example.hotelbooking.domain.Room;
-import com.example.hotelbooking.mapper.RoomMapper;
-import com.example.hotelbooking.repository.domain.specification.filter.RoomFilter;
-import com.example.hotelbooking.service.domain.RoomService;
+import com.example.hotelbooking.domain.dto.Room;
+import com.example.hotelbooking.domain.mapper.RoomMapper;
+import com.example.hotelbooking.domain.repository.domain.specification.filter.RoomFilter;
+import com.example.hotelbooking.domain.service.domain.RoomService;
 import com.example.hotelbooking.web.dto.room.create.CreateRoomRequestDto;
 import com.example.hotelbooking.web.dto.room.response.RoomResponseDto;
 import com.example.hotelbooking.web.dto.room.update.UpdateRoomRequestDto;

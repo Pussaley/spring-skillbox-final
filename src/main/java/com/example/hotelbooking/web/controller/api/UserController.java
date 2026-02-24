@@ -1,8 +1,8 @@
 package com.example.hotelbooking.web.controller.api;
 
-import com.example.hotelbooking.domain.User;
-import com.example.hotelbooking.mapper.UserMapper;
-import com.example.hotelbooking.service.domain.UserService;
+import com.example.hotelbooking.domain.dto.User;
+import com.example.hotelbooking.domain.mapper.UserMapper;
+import com.example.hotelbooking.domain.service.domain.UserService;
 import com.example.hotelbooking.web.dto.user.create.UserRequestDto;
 import com.example.hotelbooking.web.dto.user.response.UserResponseDto;
 import jakarta.validation.Valid;

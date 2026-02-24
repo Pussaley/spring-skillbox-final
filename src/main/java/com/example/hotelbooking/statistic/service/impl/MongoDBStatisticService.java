@@ -1,7 +1,7 @@
 package com.example.hotelbooking.statistic.service.impl;
 
 import com.example.hotelbooking.messaging.dto.EventInfoStatisticsDto;
-import com.example.hotelbooking.repository.statistics.MongoDBRepository;
+import com.example.hotelbooking.domain.repository.statistics.MongoDBRepository;
 import com.example.hotelbooking.statistic.dto.response.StatisticsResponseDto;
 import com.example.hotelbooking.statistic.entity.StatisticType;
 import com.example.hotelbooking.statistic.entity.StatisticsInfoMongoDB;

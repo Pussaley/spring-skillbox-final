@@ -38,8 +38,6 @@ public class StatisticsKafkaListener {
             @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
             @Header(KafkaHeaders.RECEIVED_TIMESTAMP) Long timestamp
     ) {
-        log.info("Received the message ...");
-
         Map<StatisticsKeys, Object> fields = fillUserRegistrationEventFields(event);
 
         EventInfoStatisticsDto statisticsDto = new EventInfoStatisticsDto(
@@ -50,11 +48,7 @@ public class StatisticsKafkaListener {
                 fields
         );
 
-        log.info("try to save");
-
         statisticService.save(statisticsDto);
-
-        log.info("Processed the message ...");
     }
 
     @KafkaListener(
@@ -68,8 +62,6 @@ public class StatisticsKafkaListener {
             @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
             @Header(KafkaHeaders.RECEIVED_TIMESTAMP) Long timestamp
     ) {
-        log.info("Received the message ...");
-
         Map<StatisticsKeys, Object> fields = fillRoomReservationEventFields(event);
 
         EventInfoStatisticsDto statisticsDto = new EventInfoStatisticsDto(
@@ -80,8 +72,6 @@ public class StatisticsKafkaListener {
                 fields
         );
         statisticService.save(statisticsDto);
-
-        log.info("Processed the message ...");
     }
 
     private Map<StatisticsKeys, Object> fillUserRegistrationEventFields(@NonNull UserRegistrationEvent event) {
