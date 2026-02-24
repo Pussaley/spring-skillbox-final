@@ -25,6 +25,8 @@ logging:
 #    org.apache.kafka: DEBUG
 
 app:
+  info:
+    name: Hotel Booking Service
   settings:
     kafka:
       consumer:

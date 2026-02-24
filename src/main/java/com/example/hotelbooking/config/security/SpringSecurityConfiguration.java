@@ -2,6 +2,7 @@ package com.example.hotelbooking.config.security;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,6 +23,9 @@ import java.time.ZonedDateTime;
 @EnableWebSecurity
 @Configuration
 public class SpringSecurityConfiguration {
+
+    @Value("${app.info.name}")
+    private String globalAppName;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -51,7 +55,7 @@ public class SpringSecurityConfiguration {
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {
         return (request, response, authException) -> {
-            response.setHeader("WWW-Authenticate", "Basic realm=\"Hotel Booking Service\"");
+            response.setHeader("WWW-Authenticate", "Basic realm=\"" + globalAppName + "\"");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json;charset=UTF-8");
 
