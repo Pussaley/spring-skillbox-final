@@ -57,7 +57,7 @@ public class HotelController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<HotelResponseDto> create(
             @Valid @RequestBody CreateHotelRequestDto hotelRequest
     ) {
@@ -71,7 +71,7 @@ public class HotelController {
     }
 
     @PutMapping
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<HotelResponseDto> create(
             @PathVariable Long id,
             @Valid @RequestBody UpdateHotelRequestDto hotelRequest
@@ -87,7 +87,7 @@ public class HotelController {
 
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<HotelResponseDto> deleteById(
             @PathVariable Long id
     ) {

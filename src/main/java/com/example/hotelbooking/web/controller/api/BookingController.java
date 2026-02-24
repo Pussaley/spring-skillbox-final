@@ -29,7 +29,7 @@ public class BookingController {
     private final BookingMapper bookingMapper;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<List<BookingResponseDto>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(
                 bookingService.getAll().stream()

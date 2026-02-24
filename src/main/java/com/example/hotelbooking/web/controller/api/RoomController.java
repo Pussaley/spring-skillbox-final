@@ -54,7 +54,7 @@ public class RoomController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<RoomResponseDto> create(
             @Valid @RequestBody CreateRoomRequestDto roomRequest
     ) {
@@ -67,7 +67,7 @@ public class RoomController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<RoomResponseDto> update(
             @PathVariable Long id,
             @Valid @RequestBody UpdateRoomRequestDto roomRequest) {
@@ -81,7 +81,7 @@ public class RoomController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<Void> deleteById(
             @PathVariable Long id
     ) {
